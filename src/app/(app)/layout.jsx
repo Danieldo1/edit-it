@@ -27,7 +27,9 @@ export default function RootLayout({ children }) {
         <div className="max-w-full px-2 md:max-w-2xl lg:max-w-4xl xl:max-w-7xl 2xl:max-w-8xl w-full h-full mx-auto"> 
         <Navbar />
         <ClerkLoaded>
-          {children}
+          <div className="container mt-8">
+            {children}  
+          </div>
         </ClerkLoaded>
         </div>
       </ThemeProvider>

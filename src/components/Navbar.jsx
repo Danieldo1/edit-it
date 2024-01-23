@@ -32,12 +32,12 @@ const Navbar = () => {
                     <Link href={'/'} className={path === '/' ? 'text-primary transition-all duration-700 ease-in-out ' : 'hover:text-primary'}>Home</Link>
                     <Link href={'/create'} className={path === '/create' ? 'text-primary transition-all duration-700 ease-in-out ' : 'hover:text-primary'}>Create</Link>
                     <Link href={'/browse'} className={path === '/browse' ? 'text-primary transition-all duration-700 ease-in-out ' : 'hover:text-primary'}>Browse</Link>
-                    {isSignedIn === true ? <UserButton afterSignOutUrl='/' /> : <Link href={'/sign-up'}>Login</Link>}
-                    {/* <Link href={'/sign-up'}>Login</Link> */}
+                    {isSignedIn === true ? <UserButton afterSignOutUrl='/' /> : <Link href={'/sign-up'} className='hover:text-primary'>Login</Link>}
+                    <ModeToggle />
                 </div>
             </div>
         </div>
-
+                        {/* MOBILE NAV */}
         <div className='md:hidden block  '>
             <div className='flex justify-between py-4 items-center border-b-2 '>
                 <div>LOGO</div>
