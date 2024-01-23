@@ -49,23 +49,47 @@ const CreatePage = () => {
     },
   })
 
-  const onSubmit = (values) => {
-    console.log(values)
-  }
+  // const onSubmit = async (values) => {
+    
 
+  //   const response = await fetch('api/create',{
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //       description: values.description,
+  //       style: values.select,
+  //       image: values.file[0].name
+  //     })
+  //   })
+  //   console.log(response)
+  //   const data = await response.json();
+  //   // console.log(data)
+  // }
+  const handleUpload = async (event) => {
+    const formData = new FormData();
+    formData.append('image', event.target.files[0]);
+  
+    const response = await fetch(`https://api.imgbb.com/1/upload?expiration=600&key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`, {
+      method: 'POST',
+      body: formData, // No headers needed, browser sets the multipart/form-data header
+    });
+  
+    console.log(response);
+  }
   return (
   
     <section>
       <h1 className="text-3xl font-bold ">Create</h1>
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-8 border-2 p-8 rounded-xl shadow-md shadow-secondary">
+      <form onSubmit={form.handleSubmit((values) => console.log(values))} className="space-y-8 mt-8 border-2 p-8 rounded-xl shadow-md shadow-secondary">
       
             <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Label htmlFor="file">Picture</Label>
-                <FormField control={form.control} name="file" render={({ field }) => (
-                  <Input id="file" type="file" className='cursor-pointer' {...field} />
-                )}
-                />
+               
+                  <Input id="file" type="file" onChange={handleUpload} className='cursor-pointer' />
+                
               </div>
               
               <FormField
