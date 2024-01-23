@@ -16,10 +16,11 @@ import {
   import Link from 'next/link'
   import { UserButton } from "@clerk/nextjs";
   import { useUser } from "@clerk/nextjs"
+import { usePathname } from 'next/navigation'
 
 const Navbar = () => {
     const { isSignedIn, user, isLoaded } = useUser();
-    console.log(isSignedIn)
+   const path = usePathname()
 
 
   return (
@@ -28,9 +29,9 @@ const Navbar = () => {
             <div className='flex justify-between items-center py-4 border-b-2 '>
                 <div>LOGO</div>
                 <div className='flex gap-4 justify-evenly items-center'>
-                    <Link href={'/'}>Home</Link>
-                    <Link href={'/create'}>Create</Link>
-                    <Link href={'/browse'}>Browse</Link>
+                    <Link href={'/'} className={path === '/' ? 'text-primary transition-all duration-700 ease-in-out ' : 'hover:text-primary'}>Home</Link>
+                    <Link href={'/create'} className={path === '/create' ? 'text-primary transition-all duration-700 ease-in-out ' : 'hover:text-primary'}>Create</Link>
+                    <Link href={'/browse'} className={path === '/browse' ? 'text-primary transition-all duration-700 ease-in-out ' : 'hover:text-primary'}>Browse</Link>
                     {isSignedIn === true ? <UserButton afterSignOutUrl='/' /> : <Link href={'/sign-up'}>Login</Link>}
                     {/* <Link href={'/sign-up'}>Login</Link> */}
                 </div>
@@ -55,11 +56,10 @@ const Navbar = () => {
                                             <SheetTitle>LOGO</SheetTitle>
                                             <SheetDescription>
                                             <div className=' h-full flex flex-col text-xl mt-10 items-center justify-evenly gap-4'>
-                                            <Link href={'/'}>Home</Link>
-                                            <Link href={'/create'}>Create</Link>
-                                            <Link href={'/browse'}>Browse</Link>
+                                            <Link href={'/'} className={path === '/' ? 'text-primary' : ''}>Home</Link>
+                                            <Link href={'/create'} className={path === '/create' ? 'text-primary' : ''}>Create</Link>
+                                            <Link href={'/browse'} className={path === '/browse' ? 'text-primary' : ''}>Browse</Link>
                                             {isSignedIn === false ? <Link href={'/sign-up'}>Login</Link> : null}
-                                            
                                             </div>
                                             </SheetDescription>
                                             </SheetHeader>
