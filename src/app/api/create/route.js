@@ -10,7 +10,6 @@ const replicate = new Replicate({
 export const POST = async (req) => {
   const { file ,description, style } = await req.json()
 
-  
 
   const output = await replicate.run(
       "tencentarc/photomaker:ddfc2b08d209f9fa8c1eca692712918bd449f695dabb4a958da31802a9570fe4",
@@ -23,6 +22,6 @@ export const POST = async (req) => {
         }
       }
     );
-
+      console.log(output)
   return NextResponse.json(output)
 }

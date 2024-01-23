@@ -10,7 +10,7 @@ import {
     SheetTitle,
     SheetTrigger,
   } from "@/components/ui/sheet"
-  import { Button } from './UI/button'
+  import { Button } from './ui/button'
   import ModeToggle from './ModeToggle'
 
   import Link from 'next/link'
