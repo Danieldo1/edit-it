@@ -15,33 +15,35 @@ import {
 
   import Link from 'next/link'
   import { UserButton } from "@clerk/nextjs";
-  import { auth, currentUser } from "@clerk/nextjs";
+  import { useUser } from "@clerk/nextjs"
 
 const Navbar = () => {
-    // const user = auth()
-    // console.log(user)
+    const { isSignedIn, user, isLoaded } = useUser();
+    console.log(isSignedIn)
 
 
   return (
 <section>
 <div className='md:block hidden'>
-            <div className='flex justify-between py-4 border-b-2 '>
+            <div className='flex justify-between items-center py-4 border-b-2 '>
                 <div>LOGO</div>
-                <div className='flex gap-4'>
+                <div className='flex gap-4 justify-evenly items-center'>
                     <Link href={'/'}>Home</Link>
                     <Link href={'/create'}>Create</Link>
                     <Link href={'/browse'}>Browse</Link>
-                    <Link href={'/sign-up'}>Login</Link>
+                    {isSignedIn === true ? <UserButton afterSignOutUrl='/' /> : <Link href={'/sign-up'}>Login</Link>}
+                    {/* <Link href={'/sign-up'}>Login</Link> */}
                 </div>
             </div>
         </div>
 
         <div className='md:hidden block  '>
-            <div className='flex justify-between py-4  border-b-2 '>
+            <div className='flex justify-between py-4 items-center border-b-2 '>
                 <div>LOGO</div>
                         <div> 
-                            <div className='flex flex-row gap-4 '>
+                            <div className='flex flex-row gap-4 justify-evenly items-center '>
                                 <ModeToggle />
+                                <UserButton afterSignOutUrl='/' />
                                     <Sheet>
                                         <SheetTrigger asChild >
                                             <Button variant="outline" size="icon">
@@ -56,7 +58,8 @@ const Navbar = () => {
                                             <Link href={'/'}>Home</Link>
                                             <Link href={'/create'}>Create</Link>
                                             <Link href={'/browse'}>Browse</Link>
-                                            <Link href={'/sign-up'}>Login</Link>
+                                            {isSignedIn === false ? <Link href={'/sign-up'}>Login</Link> : null}
+                                            
                                             </div>
                                             </SheetDescription>
                                             </SheetHeader>
