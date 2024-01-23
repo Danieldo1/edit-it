@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Progress } from "@/components/ui/progress"
+import { useToast } from "@/components/ui/use-toast"
 
 import * as z from "zod"
 import CreateForm from '@/components/CreateForm'
@@ -20,14 +21,17 @@ const CreatePage = () => {
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(5)
   const [generating, setGenerating] = useState(false)
+  const [uploaded, setUploaded] = useState(false)
 
   const { isSignedIn, user, isLoaded } = useUser();
   const router = useRouter()
   if(!isSignedIn) return router.push('/sign-up')
+  const { toast } = useToast()
 
   const onSubmit = async (values) => {
     setProgress(65)
     setGenerating(true)
+    console.log(values.file)
     const response = await fetch('api/create',{
       method: 'POST',
       headers: {
@@ -36,19 +40,18 @@ const CreatePage = () => {
       body: JSON.stringify({
         description: values.description,
         style: values.select,
-        file: values.file
+        file: values.file,
+
       })
     })
     setProgress(100)
     setGenerating(false)
-    
+  
   }
   const handleUpload = async (event) => {
     setLoading(true)
     const formData = new FormData();
     formData.append('image', event.target.files[0]);
-    console.log(event.target.files[0].name)
-  
     const response = await fetch(`https://api.imgbb.com/1/upload?expiration=600&key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`, {
       method: 'POST',
       body: formData, // No headers needed, browser sets the multipart/form-data header
@@ -57,6 +60,7 @@ const CreatePage = () => {
     setProgress(33)
     const data = await response.json();
     form.setValue('file', data.data.url)
+    setUploaded(true)
   }
 
   const form = useForm({
@@ -75,7 +79,7 @@ const CreatePage = () => {
         <Progress value={progress} />
       </div>
 
-      <CreateForm onSubmit={onSubmit} handleUpload={handleUpload} loading={loading} form={form} generating={generating}  />
+      <CreateForm onSubmit={onSubmit} handleUpload={handleUpload} loading={loading} form={form} generating={generating} uploaded={uploaded}  />
 
     </section>
   )

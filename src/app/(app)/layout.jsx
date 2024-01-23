@@ -4,6 +4,8 @@ import Navbar from "@/components/Navbar";
 import { ClerkProvider,ClerkLoaded, ClerkLoading, } from '@clerk/nextjs'
 import { ThemeProvider } from "@/components/theme-provider"
 import { Loader2 } from "lucide-react"
+import { Toaster } from "@/components/ui/toaster"
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +29,7 @@ export default function RootLayout({ children }) {
         <div className="max-w-full px-2 md:max-w-2xl lg:max-w-4xl xl:max-w-7xl 2xl:max-w-8xl w-full h-full mx-auto"> 
         <Navbar />
         <ClerkLoaded>
+          <Toaster />
           <div className="container mt-8">
             {children}  
           </div>

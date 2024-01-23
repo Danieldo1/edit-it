@@ -1,7 +1,5 @@
 'use client'
 
-import React, { useState } from 'react'
-
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -17,9 +15,7 @@ import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -28,7 +24,7 @@ import { Loader2 } from "lucide-react"
 
 
 
-const CreateForm = ({onSubmit, handleUpload, loading, form,generating}) => {
+const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded}) => {
 
   return (
     <Form {...form}>
@@ -37,9 +33,27 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating}) => {
           <div className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="file">Picture</Label>
              <div className="flex items-center justify-center gap-5">
-                <Input id="file" type="file" onChange={handleUpload} className='cursor-pointer'  />
-                {loading===true ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
+                {uploaded===true ? (
+                        <div className="flex flex-col items-center justify-center">
+                            <div className="flex flex-col items-center justify-center">
+                                <div className="aspect-square rounded-lg">
+                                    <img src={form.watch('file')} className=" rounded-lg" />
+                                </div>
+                            </div>
+                        </div>
+                ):(
+                    <>
+                        <Input id="file" type="file" onChange={handleUpload} className='cursor-pointer'  />
+                        {loading===true ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
+                    </>
+
+                )}
              </div>
+               
+  
+            <FormDescription>
+                 Select your photo of your face
+            </FormDescription>
               
             </div>
             <FormField
@@ -94,10 +108,10 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating}) => {
       />
       <Button type="submit" className="w-full">
         {generating===true ? (
-    <div className="flex items-center gap-2">
-    <p>Generating</p>
-      <Loader2 className="w-5 h-5 animate-spin" />
-    </div>
+            <div className="flex items-center gap-2">
+            <p>Generating</p>
+            <Loader2 className="w-5 h-5 animate-spin" />
+            </div>
       ) : "Create" }
       </Button>
 
