@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast"
 
 import * as z from "zod"
 import CreateForm from '@/components/CreateForm'
+import { Label } from '@/components/ui/label'
 
 const formSchema = z.object({
   description: z.string().min(10, { message: "Description must be at least 10 characters" }),
@@ -28,26 +29,48 @@ const CreatePage = () => {
   if(!isSignedIn) return router.push('/sign-up')
   const { toast } = useToast()
 
-  const onSubmit = async (values) => {
-    setProgress(65)
-    setGenerating(true)
-    console.log(values.file)
-    const response = await fetch('api/create',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        description: values.description,
-        style: values.select,
-        file: values.file,
-
-      })
-    })
-    setProgress(100)
-    setGenerating(false)
-  
+  const incrementProgress = (currentProgress, setProgress) => {
+    // This function increments the progress by one until it reaches 100.
+    const intervalId = setInterval(() => {
+      if (currentProgress < 100) {
+        currentProgress += 1;
+        setProgress(currentProgress);
+      } else {
+        clearInterval(intervalId);
+      }
+    }, 1000); // Adjust the interval time as needed.
+    return intervalId;
   }
+  
+  const onSubmit = async (values) => {
+    setProgress(65);
+    const progressInterval = incrementProgress(65, setProgress);
+    setGenerating(true);
+  
+    try {
+      const response = await fetch('api/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          description: values.description,
+          style: values.select,
+          file: values.file,
+        })
+      });
+  
+      // When the request is complete, clear the interval and set progress to 100
+      clearInterval(progressInterval);
+      setProgress(100);
+    } catch (error) {
+      console.error('There was an error creating', error);
+      clearInterval(progressInterval);
+      setProgress(65); // Reset to initial progress or handle accordingly
+    } finally {
+      setGenerating(false);
+    }
+  };
   const handleUpload = async (event) => {
     setLoading(true)
     const formData = new FormData();
@@ -73,15 +96,18 @@ const CreatePage = () => {
   })
   return (
   
-    <section>
-      <h1 className="text-3xl font-bold ">Create</h1>
-      <div className='my-5 '>
-        <Progress value={progress} />
+    <section className="w-full h-full ">
+    <h1 className="text-3xl font-bold ">Create</h1>
+    <div className="flex flex-col md:flex-col">
+    <div className='relative mt-5 md:order-2 md:pb-10'>
+      <Progress value={progress} />
+      <Label className="absolute inset-0 flex justify-center items-center text-sm text-gray-500">{progress}%</Label>
+    </div>
+      <div className=" md:order-1">
+        <CreateForm onSubmit={onSubmit} handleUpload={handleUpload} loading={loading} form={form} generating={generating} uploaded={uploaded}  />
       </div>
-
-      <CreateForm onSubmit={onSubmit} handleUpload={handleUpload} loading={loading} form={form} generating={generating} uploaded={uploaded}  />
-
-    </section>
+    </div>
+  </section>
   )
 }
 
