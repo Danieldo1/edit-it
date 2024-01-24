@@ -30,8 +30,8 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded}
   return (
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-8 border-2 p-8 rounded-xl shadow-md shadow-secondary">
-    
-          <div className="grid w-full max-w-full md:max-w-lg  justify-center  items-center gap-1.5">
+      {/* PHOTO STATE */}
+          <div className={`grid w-full md:w-1/2 max-w-full md:max-w-[35%]  justify-center  items-center gap-1.5 ${uploaded===true ? 'mx-auto' : 'null' }`}>
              <div className="flex items-center justify-center gap-5">
                 {uploaded===true ? (
                   <div className="flex flex-col items-center justify-center">
@@ -69,11 +69,7 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded}
 
                 )}
              </div>
-                        
-               
-  
-
-              
+             {/* STYLE SELECTOR */}
             </div>
             <FormField
         control={form.control}
@@ -108,7 +104,7 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded}
           </FormItem>
         )}
       />
-
+      {/* DESCRIPTION/PROMPT */}
       <FormField
         control={form.control}
         name="description"
