@@ -1,5 +1,7 @@
 import Replicate from "replicate";
 import { NextResponse } from "next/server";
+import { File } from "@/models/File";
+import mongoose from "mongoose";
 
 
 const replicate = new Replicate({
@@ -8,8 +10,8 @@ const replicate = new Replicate({
 
 
 export const POST = async (req) => {
+  await mongoose.connect(process.env.MONGODB_URI)
   const { file ,description, style } = await req.json()
-
 
   const output = await replicate.run(
       "tencentarc/photomaker:ddfc2b08d209f9fa8c1eca692712918bd449f695dabb4a958da31802a9570fe4",
@@ -22,6 +24,16 @@ export const POST = async (req) => {
         }
       }
     );
-      console.log(output, 'output')
+    
+
+      const genImg= new File({
+        url: output[0],
+        description: description,
+        style: style
+      })
+        // console.log(genImg, 'genImg')
+      await genImg.save()
+
+      // console.log(output, 'output')
   return NextResponse.json(output)
 }
