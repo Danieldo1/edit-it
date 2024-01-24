@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Loader2 } from "lucide-react"
+import Image from "next/image"
 
 
 
@@ -30,30 +31,48 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded}
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-8 border-2 p-8 rounded-xl shadow-md shadow-secondary">
     
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="file">Picture</Label>
+          <div className="grid w-full max-w-full md:max-w-lg  justify-center  items-center gap-1.5">
              <div className="flex items-center justify-center gap-5">
                 {uploaded===true ? (
-                        <div className="flex flex-col items-center justify-center">
-                            <div className="flex flex-col items-center justify-center">
-                                <div className="aspect-square rounded-lg">
+                  <div className="flex flex-col items-center justify-center">
+                            <div className="flex flex-col items-center justify-center ">
+                                <div className="aspect-square rounded-lg ">
                                     <img src={form.watch('file')} className=" rounded-lg" />
                                 </div>
                             </div>
                         </div>
                 ):(
-                    <>
+                  <div className="flex flex-col md:flex-row md:gap-5 items-center justify-center">
+                      <div className="flex flex-col items-center justify-center ">
+                            <div className="flex flex-col items-center justify-center md:mb-0 mb-8">
+                                <div className="aspect-square rounded-lg">
+                                    <Image src={'/photoupload.svg'} width={150} height={150} className=" rounded-lg" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={`flex flex-col items-center md:items-start justify-center `}> 
                         <Input id="file" type="file" onChange={handleUpload} className='cursor-pointer'  />
-                        {loading===true ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
-                    </>
+                        {loading===true ? (
+                        <div className="flex flex-col items-center justify-center mt-2 md:mt-0  md:ml-5 ">
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                        </div>  
+                          ) : (
+                        <div className={`mt-2  flex flex-col md:flex-row `}>
+                        <FormDescription>
+                          Select your photo of your face
+                        </FormDescription>
+                        </div>
+                        )}
+                        </div>
+                    </div>
 
                 )}
              </div>
+                        
                
   
-            <FormDescription>
-                 Select your photo of your face
-            </FormDescription>
+
               
             </div>
             <FormField
