@@ -12,8 +12,8 @@ import * as z from "zod"
 import CreateForm from '@/components/CreateForm'
 import { Label } from '@/components/ui/label'
 
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Button } from '@/components/ui/button'
 
 const formSchema = z.object({
   description: z.string().min(10, { message: "Description must be at least 10 characters" }),
@@ -115,33 +115,40 @@ const CreatePage = () => {
     <section className="w-full h-full ">
     <h1 className="text-3xl font-bold mb-5 md:mb-0">Create</h1>
     <div className="flex flex-col md:flex-col">
-    <div className='relative mt-5 md:order-2 mb-5'>
+    <div className='relative mt-5 md:order-3 mb-5'>
       <Progress value={progress}  />
       <Label className="absolute inset-0 flex justify-center items-center text-sm font-bold text-foreground">{progress}%</Label>
     </div>
       <div className=" md:order-1 pb-5">
         <CreateForm onSubmit={onSubmit} handleUpload={handleUpload} loading={loading} form={form} generating={generating} uploaded={uploaded}  />
       </div>
+      {/* Dialog POP up */}
+      {imageInfo && (
+          <div className="order-2 w-full">
+          <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+            <AlertDialogTrigger asChild>
+              <Button variant="secondary" className='w-full'>Show Result</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className='text-foreground font-bold text-3xl'>Image Result</AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogDescription>
+                <img src={imageInfo} alt="Generated Image" className='rounded-md' />
+                <div >
+                  <p className='mt-5 text-foreground font-bold text-base'>Description: <span className='font-normal text-base capitalize'>{form.watch('description')}</span></p> 
+                  <p className='mt-0 text-foreground font-bold text-base'>Style: <span className='font-normal text-base capitalize'>{form.watch('select')}</span></p>
+                </div>
+              </AlertDialogDescription>
+              <AlertDialogFooter>
+                <AlertDialogAction onClick={handleCloseDialog}>Close</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          </div>
+        )}
     </div>
-
     
-        <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle className='text-foreground font-bold text-3xl'>Image Result</AlertDialogTitle>
-            </AlertDialogHeader>
-            <AlertDialogDescription>
-              <img src={imageInfo} alt="Generated Image" className='rounded-md' />
-              <div >
-                <p className='mt-5 text-foreground font-bold text-base'>Description: <span className='font-normal text-base capitalize'>{form.watch('description')}</span></p> 
-                <p className='mt-0 text-foreground font-bold text-base'>Style: <span className='font-normal text-base capitalize'>{form.watch('select')}</span></p>
-              </div>
-            </AlertDialogDescription>
-            <AlertDialogFooter>
-              <AlertDialogAction onClick={handleCloseDialog}>Close</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
    
   </section>
   )
