@@ -19,13 +19,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Loader2 } from "lucide-react"
+import { Loader2,RotateCcw } from "lucide-react"
 import Image from "next/image"
 
 
 
 
-const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded}) => {
+const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded, setUploaded}) => {
 
   return (
     <Form {...form}>
@@ -37,9 +37,10 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded}
                   <div className="flex flex-col items-center justify-center">
                             <div className="flex flex-col items-center justify-center ">
                                 <div className="aspect-square rounded-lg ">
-                                    <img src={form.watch('file')} className=" rounded-lg" />
+                                    <img src={form.watch('file')} alt="Uploaded user Image" className=" rounded-lg" />
                                 </div>
                             </div>
+                            <Button variant="outline" onClick={()=>{form.setValue('file', ''); setUploaded(false)}} className='mt-5 hover:bg-destructive hover:text-destructive-foreground group'><RotateCcw className="w-4 h-4 mr-2 group-hover:rotate-[-120deg]"/>Reset</Button>
                         </div>
                 ):(
                   <div className="flex flex-col md:flex-row md:gap-5 items-center justify-center">

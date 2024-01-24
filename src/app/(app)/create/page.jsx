@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useUser } from "@clerk/nextjs"
 import { useRouter } from 'next/navigation'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -30,10 +30,16 @@ const CreatePage = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [imageInfo, setImageInfo] = useState(null);
 
-  const { isSignedIn, user, isLoaded } = useUser();
+  const { isSignedIn} = useUser();
   const router = useRouter()
-  if(!isSignedIn) return router.push('/sign-up')
+  // if(!isSignedIn) return router.push('/sign-up')
   const { toast } = useToast()
+
+  useEffect(() => {
+    if (!isSignedIn) {
+      router.push('/sign-up');
+    }
+  }, [isSignedIn, router]);
 
   const incrementProgress = (currentProgress, setProgress) => {
     // This function increments the progress by one until it reaches 100.
@@ -120,7 +126,7 @@ const CreatePage = () => {
       <Label className="absolute inset-0 flex justify-center items-center text-sm font-bold text-foreground">{progress}%</Label>
     </div>
       <div className=" md:order-1 pb-5">
-        <CreateForm onSubmit={onSubmit} handleUpload={handleUpload} loading={loading} form={form} generating={generating} uploaded={uploaded}  />
+        <CreateForm onSubmit={onSubmit} handleUpload={handleUpload} loading={loading} form={form} generating={generating} uploaded={uploaded} setUploaded={setUploaded}  />
       </div>
       {/* Dialog POP up */}
       {imageInfo && (
