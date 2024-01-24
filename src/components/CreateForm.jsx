@@ -31,7 +31,7 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded}
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-8 border-2 p-8 rounded-xl shadow-md shadow-secondary">
       {/* PHOTO STATE */}
-          <div className={`grid w-full md:w-1/2 max-w-full md:max-w-[35%]  justify-center  items-center gap-1.5 ${uploaded===true ? 'mx-auto' : 'md:w-full md:max-w-[100%] ' }`}>
+          <div className={`grid w-full md:w-1/2 max-w-full  justify-center md:max-w-full items-center gap-1.5 ${uploaded===true ? 'mx-auto md:max-w-[35%] lg:max-w-[30%] xl:max-w-[25%]' : 'md:w-full  ' }`}>
              <div className="flex items-center justify-center gap-5">
                 {uploaded===true ? (
                   <div className="flex flex-col items-center justify-center">
