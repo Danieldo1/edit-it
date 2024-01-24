@@ -2,15 +2,21 @@ import Replicate from "replicate";
 import { NextResponse } from "next/server";
 import { File } from "@/models/File";
 import mongoose from "mongoose";
-
+import {Cloudinary} from "@cloudinary/url-gen";
+import { v2 as cloudinary } from "cloudinary"
 
 const replicate = new Replicate({
     auth: process.env.REPLICATE_API_TOKEN,
 })
-
+cloudinary.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+  api_secret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET
+})
 
 export const POST = async (req) => {
   await mongoose.connect(process.env.MONGODB_URI)
+  
   const { file ,description, style } = await req.json()
 
   const output = await replicate.run(
@@ -24,16 +30,16 @@ export const POST = async (req) => {
         }
       }
     );
-    
 
+    const signature = await cloudinary.uploader.upload(output[0], {folder: `${style}/${description}`})
       const genImg= new File({
-        url: output[0],
+        url: signature.url ,
         description: description,
         style: style
       })
-        // console.log(genImg, 'genImg')
       await genImg.save()
+      // console.log(genImg, 'genImg')
 
-      // console.log(output, 'output')
+      
   return NextResponse.json(output)
 }
