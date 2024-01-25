@@ -7,7 +7,8 @@ const nextConfig = {
                 hostname: 'storage.ko-fi.com',
             },
         ],
-    }
+    },
+    
 };
 
 export default nextConfig;
