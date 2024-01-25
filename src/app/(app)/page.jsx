@@ -13,8 +13,8 @@ export default function Home() {
         {/* left */}
         <HeroLeft />
         {/* right */}
-        <div className="md:w-[60%] w-full mt-8 md:mt-0 relative">
-        <h2 className="text-3xl font-bold text-center mb-5 text1">Discover our styles</h2> 
+        <div className="md:w-[50%] w-full  md:mt-0 relative">
+        <h2 className="text-3xl font-bold text-center mb-5 text1">Our styles</h2> 
           <div className="justify-center flex items-center aspect-square relative">
             <Image src="/modelorg.jpg" width={500} height={500} alt="hero" className="object-cover w-[75%] h-[75%] rounded-md shadow-sm shadow-foreground"/>
             <div className='absolute z-10 right-4 -bottom-8'>
