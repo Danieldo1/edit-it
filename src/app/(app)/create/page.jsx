@@ -10,7 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 import * as z from "zod";
 import CreateForm from "@/components/CreateForm";
-import { Label } from "../../../components/ui/label.jsx";
+import { Label } from "@/components/ui/label";
 
 import {
   AlertDialog,
