@@ -5,6 +5,7 @@ import { ClerkProvider, ClerkLoaded, ClerkLoading } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Loader2 } from "lucide-react";
 import { Toaster } from "@/components/ui/toaster";
+import Footer from "@/components/Footer";
 
 const inter = Kanit({
   subsets: ["latin"],
@@ -36,7 +37,10 @@ export default function RootLayout({ children }) {
               <Navbar />
               <ClerkLoaded>
                 <Toaster />
-                <div className="container mt-8">{children}</div>
+                <div className="container mt-8">
+                  {children}
+                </div>
+                <Footer />
               </ClerkLoaded>
             </div>
           </ThemeProvider>

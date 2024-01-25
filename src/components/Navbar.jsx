@@ -16,15 +16,13 @@ import ModeToggle from "./ModeToggle";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const { isSignedIn, user, isLoaded } = useUser();
   const path = usePathname();
-  const [isDarkMode, setIsDarkMode] = useState(
-    document.documentElement.classList.contains("dark")
-  );
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const mutationObserver = new MutationObserver((mutations) => {

@@ -26,9 +26,7 @@ export function HeroCarusel() {
       ];
 
   return (
-    <div className="w-full max-w-md my-10">
-        
-        <h2 className="text-3xl font-bold text-center mb-5 text1">Discover our styles</h2>   
+    <div className="w-full max-w-md my-10">  
     <Carousel className="w-full max-w-md"  
      plugins={[
         Autoplay({

@@ -8,8 +8,8 @@ import Image from "next/image";
 const HeroLeft = () => {
   return (
     <div className="md:w-[60%] w-full md:mt-8 xl:mt-10 mt-0">
-          <h1 className="text-4xl md:text-5xl font-bold ">Transform Your Look with AIterImage!</h1>
-            <h4 className="text-lg mt-3">Discover a new you with <span className="font-bold text-primary tracking-wide">AIterImage</span>. <br /> Our smart web app instantly reinvents your photos with stunning AI-powered styles. Unleash creativity and stand out—effortlessly. It's your face, reimagined.</h4>
+          <h1 className="text-3xl md:text-5xl font-bold text1">Transform Your Look with AIterImage!</h1>
+            <h4 className="text-lg mt-3">Discover a new you with <span className="font-bold text-primary tracking-wide text1">AIterImage.</span> <br /> Our smart web app instantly reinvents your photos with stunning AI-powered styles. Unleash creativity and stand out—effortlessly. It&apos;s your face, reimagined.</h4>
             <div className="flex gap-2 mt-8">
               <Button><Link href="/create">Get creative</Link></Button>
               <Button variant="outline"><Link href="/browse">Explore</Link></Button>
