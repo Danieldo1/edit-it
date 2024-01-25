@@ -4,6 +4,7 @@ import { File } from "@/models/File";
 import mongoose from "mongoose";
 import {Cloudinary} from "@cloudinary/url-gen";
 import { v2 as cloudinary } from "cloudinary"
+import db from '@/lib/db';
 
 const replicate = new Replicate({
     auth: process.env.REPLICATE_API_TOKEN,
@@ -15,7 +16,7 @@ cloudinary.config({
 })
 
 export const POST = async (req) => {
-  await mongoose.connect(process.env.MONGODB_URI)
+  // await mongoose.connect(process.env.)
   
   const { file ,description, style } = await req.json()
 
@@ -41,5 +42,5 @@ export const POST = async (req) => {
       // console.log(genImg, 'genImg')
 
       
-  return NextResponse.json(output)
+  return Response.json(output)
 }
