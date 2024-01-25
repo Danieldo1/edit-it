@@ -6,6 +6,10 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'storage.ko-fi.com',
             },
+            {
+                protocol: 'http',
+                hostname: 'res.cloudinary.com'
+            }
         ],
     },
     

@@ -100,7 +100,7 @@ const CreateForm = ({
                   ) : (
                     <div className={`mt-2  flex flex-col md:flex-row `}>
                       <FormDescription>
-                        Select your photo of your face
+                        Please upload a portrait photo of yourself
                       </FormDescription>
                     </div>
                   )}

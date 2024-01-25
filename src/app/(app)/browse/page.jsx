@@ -1,12 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import {Loader2} from "lucide-react"
+import Image from "next/image";
 
 const BrowsePage = () => {
   const [imageData, setImageData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     fetchImg();
+    setLoading(false);
   }, []);
 
   const fetchImg = async () => {
@@ -30,6 +35,12 @@ const BrowsePage = () => {
   ];
   return (
     <section className="w-full h-full mb-10">
+      {loading === true ? (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <Loader2 className="w-5 h-5 animate-spin" />
+        </div>
+      ):(
+
       <div className="grid grid-cols-6 grid-rows-none gap-4 md:grid-cols-12 md:auto-rows-fr">
         {imageData.length > 0 &&
           imageData.map((image, index) => (
@@ -50,10 +61,13 @@ const BrowsePage = () => {
                 <p className="absolute top-0 left-0 w-full bg-gradient-to-b from-background text-foreground p-1 font-bold line-clamp-1">
                   {image.style}
                 </p>
-                <img
+                <Image
                   src={image.url}
-                  alt="image"
+                  alt="user created images"
+                  width={500}
+                  height={500}
                   className="w-full h-full object-cover rounded-lg"
+                  loading="lazy"
                 />
                 <p className="absolute hidden xl:block bottom-0 left-0 w-full bg-gradient-to-t from-background from-10% to-100% text-foreground p-2 capitalize">
                   {image.description}
@@ -62,6 +76,7 @@ const BrowsePage = () => {
             </div>
           ))}
       </div>
+      )}
     </section>
   );
 };
