@@ -39,7 +39,7 @@ const BrowsePage = () => {
                 index < gridClasses.length
                   ? gridClasses[index]
                   : "col-span-2 row-span-2 md:col-span-3 md:row-span-3"
-              } hover:transform hover:scale-110 hover:border-2 hover:border-primary rounded-lg transition duration-300 ease-in-out`}
+              } hover:transform hover:scale-110 hover:border-2 hover:border-primary rounded-lg transition duration-300 ease-in-out hover:z-10`}
             >
               <Link
                 href={image.url}
