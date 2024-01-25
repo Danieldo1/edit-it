@@ -24,6 +24,8 @@
     "class-variance-authority": "^0.7.0",
     "cloudinary": "^1.41.3",
     "clsx": "^2.1.0",
+    "embla-carousel-autoplay": "^8.0.0-rc20",
+    "embla-carousel-react": "^8.0.0-rc20",
     "lucide-react": "^0.314.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.0",

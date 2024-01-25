@@ -1,10 +1,10 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import { Inter } from "next/font/google";
+import { Kanit } from "next/font/google";
 import "../globals.css";
-const inter = Inter({ subsets: ["latin"] });
+const inter = Kanit({ subsets: ["latin"],weight:["100","200","300","400","500","600","700","800","900"] });
 
 export const metadata = {
-  title: 'Edit-it',
+  title: 'AIterImage',
   description: 'Create your alter persona with the help of AI magic',
 }
 
