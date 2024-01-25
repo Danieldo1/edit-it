@@ -41,9 +41,9 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded,
                                 </div>
                             </div>
                             <Button variant="outline" onClick={()=>{form.setValue('file', ''); setUploaded(false)}} className='mt-5 hover:bg-destructive hover:text-destructive-foreground group'><RotateCcw className="w-4 h-4 mr-2 group-hover:rotate-[-120deg]"/>Reset</Button>
-                        </div>
+                  </div>
                 ):(
-                  <div className="flex flex-col md:flex-row md:gap-5 items-center justify-center">
+                  <div className="flex flex-col md:flex-row md:gap-5 md:justify-start md:items-center items-center justify-center">
                       <div className="flex flex-col items-center justify-center ">
                             <div className="flex flex-col items-center justify-center md:mb-0 mb-8">
                                 <div className="aspect-square rounded-lg">
@@ -53,21 +53,20 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded,
                         </div>
 
                         <div className={`flex flex-col items-center md:items-start justify-center `}> 
-                        <Input id="file" type="file" onChange={handleUpload} className='cursor-pointer'  />
-                        {loading===true ? (
-                        <div className="flex flex-col items-center justify-center mt-2    ">
-                          <Loader2 className="w-5 h-5 animate-spin md:ml-36 md:mt-5" />
-                        </div>  
-                          ) : (
-                        <div className={`mt-2  flex flex-col md:flex-row `}>
-                        <FormDescription>
-                          Select your photo of your face
-                        </FormDescription>
-                        </div>
-                        )}
+                          <Input id="file" type="file" onChange={handleUpload} className='cursor-pointer'  />
+                            {loading===true ? (
+                                <div className="flex flex-col items-center justify-center mt-2 ">
+                                  <Loader2 className="w-5 h-5 animate-spin md:ml-36 md:mt-5" />
+                                </div>  
+                                  ) : (
+                                <div className={`mt-2  flex flex-col md:flex-row `}>
+                                <FormDescription>
+                                  Select your photo of your face
+                                </FormDescription>
+                                </div>
+                                )}
                         </div>
                     </div>
-
                 )}
              </div>
              {/* STYLE SELECTOR */}
@@ -84,18 +83,18 @@ const CreateForm = ({onSubmit, handleUpload, loading, form,generating, uploaded,
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent>
-                <SelectItem value="(No style)">No Style</SelectItem>
-                <SelectItem value="Cinematic">Cinematic</SelectItem>
-                <SelectItem value="Disney Charactor">Disney Character</SelectItem>
-                <SelectItem value="Digital Art">Digital Art</SelectItem>
-                <SelectItem value="Photographic (Default)">Photographic</SelectItem>
-                <SelectItem value="Fantasy art">Fantasy art</SelectItem>
-                <SelectItem value="Neonpunk">Neonpunk</SelectItem>
-                <SelectItem value="Enhance">Enhance</SelectItem>
-                <SelectItem value="Comic book">Comic book</SelectItem>
-                <SelectItem value="Lowpoly">Lowpoly</SelectItem>
-                <SelectItem value="Line art">Line art</SelectItem>
+              <SelectContent className='cursor-pointer'>
+                <SelectItem value="(No style)" className='cursor-pointer'>No Style</SelectItem>
+                <SelectItem value="Cinematic" className='cursor-pointer'>Cinematic</SelectItem>
+                <SelectItem value="Disney Charactor" className='cursor-pointer'>Disney Character</SelectItem>
+                <SelectItem value="Digital Art" className='cursor-pointer'>Digital Art</SelectItem>
+                <SelectItem value="Photographic (Default)" className='cursor-pointer'>Photographic</SelectItem>
+                <SelectItem value="Fantasy art" className='cursor-pointer'>Fantasy Art</SelectItem>
+                <SelectItem value="Neonpunk" className='cursor-pointer'>Neonpunk</SelectItem>
+                <SelectItem value="Enhance" className='cursor-pointer'>Enhance</SelectItem>
+                <SelectItem value="Comic book" className='cursor-pointer'>Comic Book</SelectItem>
+                <SelectItem value="Lowpoly" className='cursor-pointer'>Lowpoly</SelectItem>
+                <SelectItem value="Line art" className='cursor-pointer'>Line Art</SelectItem>
               </SelectContent>
             </Select>
             <FormDescription>

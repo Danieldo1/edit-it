@@ -30,24 +30,24 @@ const gridClasses = [
   ];
   return (
     <section className="w-full h-full mb-10">
-      <div className="grid grid-cols-6 grid-rows-10 gap-4 md:grid-cols-12 md:grid-rows-12 ">
-        {imageData.length > 0 && imageData.map((image, index) => (
-          <div
-          key={image._id} 
-          className={`relative w-full h-full ${gridClasses[index % gridClasses.length]}`}>
-            <Link href={image.url} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-              <p className="absolute top-0 left-0 w-full bg-gradient-to-b from-background  text-foreground p-3 font-bold">{image.style}</p> 
-                <img
-                  src={image.url}
-                  alt="image"
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              <p className="absolute hidden xl:block bottom-0 left-0 w-full bg-gradient-to-t from-background from-10% to-100% text-foreground p-2  capitalize">{image.description}</p> 
-            </Link>
+    <div className="grid grid-cols-6 grid-rows-none gap-4 md:grid-cols-12 md:auto-rows-fr">
+      {imageData.length > 0 && imageData.map((image, index) => (
+        <div
+          key={image._id}
+          className={`relative w-full h-full ${index < gridClasses.length ? gridClasses[index] : 'col-span-2 row-span-2 md:col-span-3 md:row-span-3'} hover:transform hover:scale-110 hover:border-2 hover:border-primary rounded-lg transition duration-300 ease-in-out`}>
+          <Link href={image.url} target="_blank" rel="noopener noreferrer" className="cursor-pointer ">
+            <p className="absolute top-0 left-0 w-full bg-gradient-to-b from-background text-foreground p-1 font-bold line-clamp-1">{image.style}</p>
+            <img
+              src={image.url}
+              alt="image"
+              className="w-full h-full object-cover rounded-lg"
+            />
+            <p className="absolute hidden xl:block bottom-0 left-0 w-full bg-gradient-to-t from-background from-10% to-100% text-foreground p-2 capitalize">{image.description}</p>
+          </Link>
         </div>
-        ))}
-      </div>
-    </section>
+      ))}
+    </div>
+  </section>
   )
 }
 
