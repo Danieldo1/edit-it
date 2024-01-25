@@ -5,12 +5,12 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Progress } from "../../../components/ui/progress";
-import { useToast } from "../../../components/ui/use-toast";
+import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/components/ui/use-toast";
 
 import * as z from "zod";
 import CreateForm from "@/components/CreateForm";
-import { Label } from "../../../components/ui/label";
+import { Label } from "../../../components/ui/label.jsx";
 
 import {
   AlertDialog,
@@ -21,8 +21,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../../../components/ui/alert-dialog";
-import { Button } from "../../../components/ui/button";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
   description: z
