@@ -83,9 +83,11 @@ const CreatePage = () => {
       });
       if (response.ok) {
         const imageData = await response.json();
+        console.log(imageData);
         clearInterval(progressInterval);
         setProgress(100);
-        setImageInfo(imageData);
+        setImageInfo(imageData,'success');
+        setImageInfo(imageData.url,'success url');
         setShowDialog(true);
       } else {
         // Handle error response

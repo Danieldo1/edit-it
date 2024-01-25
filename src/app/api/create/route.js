@@ -15,32 +15,33 @@ cloudinary.config({
   api_secret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET
 })
 
-export const POST = async (req) => {
+export const POST = async (request) => {
   // await mongoose.connect(process.env.)
   
-  const { file ,description, style } = await req.json()
+  const { file, description, style } = await request.json();
 
+  // Run the Replicate task (assuming this is a quick operation)
+  // Note: You'll need to check if your edge platform supports the needed operations
   const output = await replicate.run(
-      "tencentarc/photomaker:ddfc2b08d209f9fa8c1eca692712918bd449f695dabb4a958da31802a9570fe4",
-      {
-        input: {
-          input_image: file,
-          prompt: `${description} img`,
-          style_name: style,
-          negative_prompt: ' nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry'
-        }
+    "tencentarc/photomaker:ddfc2b08d209f9fa8c1eca692712918bd449f695dabb4a958da31802a9570fe4",
+    {
+      input: {
+        input_image: file,
+        prompt: `${description} img`,
+        style_name: style,
+        negative_prompt: ' nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry'
       }
-    );
+    }
+  );
 
-    const signature = await cloudinary.uploader.upload(output[0], {folder: `${style}/${description}`})
-      const genImg= new File({
-        url: signature.url ,
-        description: description,
-        style: style
-      })
-      await genImg.save()
-      // console.log(genImg, 'genImg')
+  // Upload to Cloudinary (assuming this is a quick operation)
+  const signature = await cloudinary.uploader.upload(output[0], { folder: `${style}/${description}` });
 
-      
-  return Response.json(output)
+  // Instead of saving to the database, consider calling an API that handles the database operation
+  // or queue the database operation to be handled asynchronously
+    console.log("signature", signature)
+  // Return the result
+  return new Response(JSON.stringify({ url: signature.url }), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
