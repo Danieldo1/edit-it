@@ -50,6 +50,10 @@
   }
 }
 
+.text1 {
+ font-weight: 400;
+  font-family: var(--font-rubik);
+}
  
 @layer base {
   * {

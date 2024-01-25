@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import { Menu } from 'lucide-react'
 import {
     Sheet,
@@ -17,17 +17,41 @@ import {
   import { UserButton } from "@clerk/nextjs";
   import { useUser } from "@clerk/nextjs"
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 
 const Navbar = () => {
     const { isSignedIn, user, isLoaded } = useUser();
    const path = usePathname()
+   const [isDarkMode, setIsDarkMode] = useState(document.documentElement.classList.contains('dark'));
+   
+   useEffect(() => {
+    const mutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === "attributes" && mutation.attributeName === "class") {
+                setIsDarkMode(document.documentElement.classList.contains('dark'));
+            }
+        });
+    });
 
+    mutationObserver.observe(document.documentElement, {
+        attributes: true
+    });
+
+    // Cleanup observer on component unmount
+    return () => mutationObserver.disconnect();
+}, []);
 
   return (
 <section>
 <div className='md:block hidden'>
             <div className='flex justify-between items-center py-4 border-b-2 '>
-                <div>LOGO</div>
+                <div className='flex '>
+                    <Link href={'/'} className='flex items-center ' >
+                        <Image src={'/logoai.svg'} alt='logo' width={50} height={50} className={`cursor-pointer ${isDarkMode ? 'invert' : ''}`} />
+                        <p className='text1 text-3xl'>AIterImage</p>
+                    </Link>
+                </div>
+
                 <div className='flex gap-4 justify-evenly items-center'>
                     <Link href={'/'} className={path === '/' ? 'text-primary transition-all duration-700 ease-in-out ' : 'hover:text-primary'}>Home</Link>
                     <Link href={'/create'} className={path === '/create' ? 'text-primary transition-all duration-700 ease-in-out ' : 'hover:text-primary'}>Create</Link>
@@ -40,7 +64,12 @@ const Navbar = () => {
                         {/* MOBILE NAV */}
         <div className='md:hidden block  '>
             <div className='flex justify-between py-4 items-center border-b-2 '>
-                <div>LOGO</div>
+            <div className='flex '>
+                    <Link href={'/'} className='flex items-center ' >
+                        <Image src={'/logoai.svg'} alt='logo' width={40} height={40} className={`cursor-pointer ${isDarkMode ? 'invert' : ''}`} />
+                        <p className='text1 text-2xl'>AIterImage</p>
+                    </Link>
+                </div>
                         <div> 
                             <div className='flex flex-row gap-4 justify-evenly items-center '>
                                 <ModeToggle />
@@ -53,9 +82,14 @@ const Navbar = () => {
                                         </SheetTrigger>
                                         <SheetContent className="h-full ">
                                             <SheetHeader>
-                                            <SheetTitle>LOGO</SheetTitle>
+                                            <SheetTitle>
+                                                <div className='text-center items-center flex justify-center'>
+                                                <Image src={'/logoai.svg'} alt='logo' width={40} height={40} className={` ${isDarkMode ? 'invert' : ''}`} />
+                                                </div>
+                                                <p className='text1 mt-1 text-2xl'>AIterImage</p>
+                                            </SheetTitle>
                                             <SheetDescription>
-                                            <div className=' h-full flex flex-col text-xl mt-10 items-center justify-evenly gap-4'>
+                                            <div className=' h-full flex flex-col text-xl mt-10 items-center justify-evenly gap-4 mt-10'>
                                             <Link href={'/'} className={path === '/' ? 'text-primary' : ''}>Home</Link>
                                             <Link href={'/create'} className={path === '/create' ? 'text-primary' : ''}>Create</Link>
                                             <Link href={'/browse'} className={path === '/browse' ? 'text-primary' : ''}>Browse</Link>
