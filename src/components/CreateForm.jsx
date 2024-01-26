@@ -123,9 +123,6 @@ const CreateForm = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className="cursor-pointer">
-                  <SelectItem value="(No style)" className="cursor-pointer">
-                    No Style
-                  </SelectItem>
                   <SelectItem value="Cinematic" className="cursor-pointer">
                     Cinematic
                   </SelectItem>

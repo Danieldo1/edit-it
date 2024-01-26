@@ -16,6 +16,7 @@ import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogContent,
+  AlertDialogCancel,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
@@ -40,20 +41,20 @@ const CreatePage = () => {
 
   const [showDialog, setShowDialog] = useState(false);
   const [imageInfo, setImageInfo] = useState(null);
+  const [closing , setClosing] = useState(false)
 
   const { isSignedIn } = useUser();
   const router = useRouter();
   // if(!isSignedIn) return router.push('/sign-up')
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (!isSignedIn) {
-      router.push("/sign-up");
-    }
-  }, [isSignedIn, router]);
+  // useEffect(() => {
+  //   if (!isSignedIn) {
+  //     router.push("/sign-up");
+  //   }
+  // }, [isSignedIn, router]);
 
   const incrementProgress = (currentProgress, setProgress) => {
-    // This function increments the progress by one until it reaches 100.
     const intervalId = setInterval(() => {
       if (currentProgress < 100) {
         currentProgress += 1;
@@ -61,7 +62,7 @@ const CreatePage = () => {
       } else {
         clearInterval(intervalId);
       }
-    }, 1000); // Adjust the interval time as needed.
+    }, 1000); 
     return intervalId;
   };
 
@@ -83,17 +84,16 @@ const CreatePage = () => {
       });
       if (response.ok) {
         const imageData = await response.json();
-        console.log(imageData);
+        console.log(imageData,'imageData');
         clearInterval(progressInterval);
         setProgress(100);
-        setImageInfo(imageData,'success');
-        
+        setImageInfo(imageData);
         setShowDialog(true);
       } else {
         // Handle error response
         toast({
           title: "Error",
-          description: "There was an error creating",
+          description: "Please reload the page and try again",
           variant: "destructive",
         });
       }
@@ -109,6 +109,46 @@ const CreatePage = () => {
       setGenerating(false);
     }
   };
+
+  const handleShare = async() => {
+    try {
+      handleCloseDialog();
+     
+      const response = await fetch('/api/share', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageUrl: imageInfo, // the URL of the image to share
+          style: form.watch('select'), // the style of the image
+          description: form.watch('description'), // the description of the image
+        }),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        form.setValue('description', '');
+        form.setValue('select', '');
+        toast({
+          title: 'Image Generated Successfully',
+          description: 'Thank you for generating your image with us !',
+          
+        })
+      } else {
+        console.error('Failed to share the image');
+        toast({
+          title: 'Error',
+          description: 'Hmm something went wrong',
+          variant: 'destructive',
+        })
+      }
+    } catch (error) {
+      console.error('Error while sharing the image:', error);
+      // Handle the exception
+    }
+  }
 
   const handleUpload = async (event) => {
     setLoading(true);
@@ -162,14 +202,10 @@ const CreatePage = () => {
           />
         </div>
         {/* Dialog POP up */}
-        {imageInfo && (
+        {/* {JSON.stringify(imageInfo) } */}
+        {imageInfo !== null ? (
           <div className="order-2 w-full">
-            <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
-              <AlertDialogTrigger asChild>
-                <Button variant="secondary" className="w-full">
-                  Show Result
-                </Button>
-              </AlertDialogTrigger>
+            <AlertDialog open={showDialog && imageInfo !== null } onOpenChange={setShowDialog}>
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle className="text-foreground font-bold text-3xl">
@@ -197,15 +233,15 @@ const CreatePage = () => {
                     </p>
                   </div>
                 </AlertDialogDescription>
-                <AlertDialogFooter>
-                  <AlertDialogAction onClick={handleCloseDialog}>
-                    Close
-                  </AlertDialogAction>
+                <AlertDialogFooter>                 
+                    <Button variant="default" onClick={handleShare}>
+                      Close
+                    </Button>     
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
           </div>
-        )}
+        ): null}
       </div>
     </section>
   );

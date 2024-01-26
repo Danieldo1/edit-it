@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
               <Loader2 className="w-5 h-5 animate-spin" />
             </div>
           </ClerkLoading>
-          <ThemeProvider attribute="class" defaultTheme="system">
+          <ThemeProvider attribute="class" defaultTheme="dark">
             <div className="max-w-full px-2 md:max-w-2xl lg:max-w-4xl xl:max-w-7xl 2xl:max-w-8xl w-full h-full mx-auto">
               <Navbar />
               <ClerkLoaded>
