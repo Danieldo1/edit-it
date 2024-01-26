@@ -130,11 +130,10 @@ const CreatePage = () => {
   
       if (response.ok) {
         form.setValue('description', '');
-        form.setValue('select', '');
         toast({
           title: 'Image Generated Successfully',
           description: 'Thank you for generating your image with us !',
-          
+          variant: 'success'
         })
       } else {
         console.error('Failed to share the image');
