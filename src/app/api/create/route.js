@@ -19,10 +19,10 @@ export const POST = async (req) => {
           input_image: file,
           prompt: `${description} img`,
           style_name: style,
-          negative_prompt: ' nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry',
-          num_steps:16,
+          negative_prompt: 'lowres, bad anatomy, bad hands, text, error, missing fingers,extra fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry',
+          num_steps:20,
           num_outputs:1,
-          // disable_safety_checker: true
+           disable_safety_checker: true
         }
       }
     );

@@ -179,7 +179,7 @@ const CreateForm = ({
                 <Input placeholder="Enter your description " {...field} />
               </FormControl>
               <FormDescription>
-                This is how AI will reimagine you.
+                Describe the image you want to generate: background,animals,appearance
               </FormDescription>
               <FormMessage />
             </FormItem>
