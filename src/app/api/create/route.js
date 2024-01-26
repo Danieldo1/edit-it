@@ -28,14 +28,14 @@ export const POST = async (req) => {
           prompt: `${description} img`,
           style_name: style,
           negative_prompt: ' nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry',
-          num_steps:10,
+          num_steps:14,
           num_outputs:1,
           // disable_safety_checker: true
         }
       }
     );
 
-    const signature = await cloudinary.uploader.upload(output[0], {folder: `${style}/${description}`})
+    // const signature = await cloudinary.uploader.upload(output[0], {folder: `${style}/${description}`})
       // const genImg= new File({
       //   url: signature.url ,
       //   description: description,
@@ -44,6 +44,6 @@ export const POST = async (req) => {
       // await genImg.save()
       // console.log(genImg, 'genImg')
 
-      console.log(signature, 'signature')
-  return Response.json(signature)
+      console.log(output[0], 'signature')
+  return NextResponse.json(output[0])
 }

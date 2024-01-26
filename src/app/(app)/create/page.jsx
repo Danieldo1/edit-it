@@ -87,7 +87,7 @@ const CreatePage = () => {
         clearInterval(progressInterval);
         setProgress(100);
         setImageInfo(imageData,'success');
-        setImageInfo(imageData.url,'success url');
+        
         setShowDialog(true);
       } else {
         // Handle error response
