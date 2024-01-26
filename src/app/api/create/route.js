@@ -4,7 +4,7 @@ import { File } from "@/models/File";
 import mongoose from "mongoose";
 import {Cloudinary} from "@cloudinary/url-gen";
 import { v2 as cloudinary } from "cloudinary"
-import db from '@/lib/db';
+// import db from '@/lib/db';
 
 const replicate = new Replicate({
     auth: process.env.REPLICATE_API_TOKEN,
@@ -28,22 +28,22 @@ export const POST = async (req) => {
           prompt: `${description} img`,
           style_name: style,
           negative_prompt: ' nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry',
-          num_steps:14,
+          num_steps:10,
           num_outputs:1,
-          disable_safety_checker: true
+          // disable_safety_checker: true
         }
       }
     );
 
     const signature = await cloudinary.uploader.upload(output[0], {folder: `${style}/${description}`})
-      const genImg= new File({
-        url: signature.url ,
-        description: description,
-        style: style
-      })
-      await genImg.save()
+      // const genImg= new File({
+      //   url: signature.url ,
+      //   description: description,
+      //   style: style
+      // })
+      // await genImg.save()
       // console.log(genImg, 'genImg')
 
-      
-  return Response.json(output)
+      console.log(signature, 'signature')
+  return Response.json(signature)
 }
