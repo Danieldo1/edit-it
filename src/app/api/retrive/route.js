@@ -3,7 +3,6 @@ import {File} from "../../../models/File";
 import mongoose from 'mongoose'
 import {NextResponse} from 'next/server'
 
-export const maxDuration = 15000
 export const runtime = 'nodejs'
 
 export async function GET() {
