@@ -11,15 +11,14 @@ const BrowsePage = () => {
   useEffect(() => {
     const fetchImg = async () => {
       try {
-        setLoading(true);
-        const response = await fetch(`api/retrive?nocache=${new Date().getTime()}`);
+        const response = await fetch("api/retrive");
         const data = await response.json();
+        console.log(data, 'dataCLient')
         setImageData(data);
       } catch (error) {
         console.error("Failed to fetch images:", error);
-      } finally {
-        setLoading(false);
-      }
+        // Handle the error state appropriately
+      } 
     };
   
     fetchImg();
