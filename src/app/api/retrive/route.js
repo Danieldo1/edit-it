@@ -5,11 +5,11 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     const data = await File.find({}).sort({createdAt: -1})
-    const headers = {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        Pragma: 'no-cache',
-        Expires: '0'
-      };
+    // const headers = {
+    //     'Cache-Control': 'no-cache, no-store, must-revalidate',
+    //     Pragma: 'no-cache',
+    //     Expires: '0'
+    //   };
      // console.log(data, 'data')
-    return new NextResponse(JSON.stringify(data), { headers })
+    return NextResponse.json(data)
 }
