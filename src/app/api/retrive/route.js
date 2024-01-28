@@ -5,7 +5,7 @@ import {NextResponse} from 'next/server'
 
 
 export async function GET() {
-    const data = await File.find().sort({createdAt: -1})
+    const data = await File.find()
     mongoose.connect(process.env.MONGODB_URI)
     const headers = {
         'Cache-Control': 'no-cache, no-store, must-revalidate',

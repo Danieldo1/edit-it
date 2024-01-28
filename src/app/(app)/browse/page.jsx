@@ -14,7 +14,7 @@ const BrowsePage = () => {
         setLoading(true);
         const response = await fetch(`api/retrive?nocache=${new Date().getTime()}`);
         const data = await response.json();
-        setImageData(data);
+        setImageData(data.reverse());
       } catch (error) {
         console.error("Failed to fetch images:", error);
       } finally {
@@ -24,7 +24,7 @@ const BrowsePage = () => {
 
     fetchImg();
 
-    
+
   }, []);
 
 
