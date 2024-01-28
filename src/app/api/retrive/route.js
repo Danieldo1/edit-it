@@ -1,10 +1,9 @@
 
 import {File} from "@/models/File"; // Ensure this points to your Mongoose model
-import mongoose from 'mongoose';
+import db from '@/lib/db';
 
 export async function GET() {
-   await mongoose.connect(process.env.MONGODB_URI)
-    const data = await File.find().sort({createdAt: -1})
-    console.log(data, 'data')
+    const data = await File.find({}).sort({createdAt: -1})
+    // console.log(data, 'data')
     return Response.json(data)
 }

@@ -9,18 +9,22 @@ const BrowsePage = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    fetchImg();
-    setLoading(false);
-  }, []);
-
-  const fetchImg = async () => {
-    await fetch("api/retrive").then((response) => {
-      response.json().then((data) => {
+    const fetchImg = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("api/retrive");
+        const data = await response.json();
         setImageData(data);
-      });
-    });
-  };
+      } catch (error) {
+        console.error("Failed to fetch images:", error);
+        // Handle the error state appropriately
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchImg();
+  }, []);
   const gridClasses = [
     "col-span-4 row-span-4 md:col-span-6 md:row-span-6", // For div 1
     "col-span-2 row-span-2 col-start-5 md:col-span-3 md:row-span-3 md:col-start-7", // For div 2
