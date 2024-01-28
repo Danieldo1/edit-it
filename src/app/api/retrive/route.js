@@ -1,15 +1,12 @@
 
-import {File} from "@/models/File"; // Ensure this points to your Mongoose model
-import db from '@/lib/db';
-import { NextResponse } from "next/server";
+import {File} from "../../../models/File"; // Ensure this points to your Mongoose model
+import mongoose from 'mongoose'
+
 
 export async function GET() {
-    const data = await File.find({}).sort({createdAt: -1})
-    // const headers = {
-    //     'Cache-Control': 'no-cache, no-store, must-revalidate',
-    //     Pragma: 'no-cache',
-    //     Expires: '0'
-    //   };
+    mongoose.connect(process.env.MONGODB_URI)
+    const data = await File.find().sort({createdAt: -1})
+
      // console.log(data, 'data')
-    return NextResponse.json(data)
+    return Response.json(data)
 }

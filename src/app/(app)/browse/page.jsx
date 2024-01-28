@@ -6,23 +6,15 @@ import Image from "next/image";
 
 const BrowsePage = () => {
   const [imageData, setImageData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchImg = async () => {
-      try {
-        const response = await fetch("api/retrive");
-        const data = await response.json();
-        console.log(data, 'dataCLient')
-        setImageData(data);
-      } catch (error) {
-        console.error("Failed to fetch images:", error);
-        // Handle the error state appropriately
-      } 
-    };
-  
-    fetchImg();
-  }, []);
+    fetch('/api/retrive').then(response=>{response.json().then(data=>{
+    setImageData(data)
+  })
+  setLoading(false)
+})
+  }, [loading]);
   const gridClasses = [
     "col-span-4 row-span-4 md:col-span-6 md:row-span-6", // For div 1
     "col-span-2 row-span-2 col-start-5 md:col-span-3 md:row-span-3 md:col-start-7", // For div 2
@@ -37,7 +29,7 @@ const BrowsePage = () => {
   ];
   return (
     <section className="w-full h-full mb-10">
-      {loading === true ? (
+      {loading ? (
         <div className="fixed inset-0 flex items-center justify-center">
           <Loader2 className="w-5 h-5 animate-spin" />
         </div>
