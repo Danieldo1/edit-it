@@ -11,14 +11,15 @@ const BrowsePage = () => {
   useEffect(() => {
     const fetchImg = async () => {
       try {
-        const response = await fetch("api/retrive");
+        setLoading(true);
+        const response = await fetch(`api/retrive?nocache=${new Date().getTime()}`);
         const data = await response.json();
-        console.log(data, 'dataCLient')
         setImageData(data);
       } catch (error) {
         console.error("Failed to fetch images:", error);
-        // Handle the error state appropriately
-      } 
+      } finally {
+        setLoading(false);
+      }
     };
   
     fetchImg();
@@ -63,11 +64,9 @@ const BrowsePage = () => {
                 <p className="absolute top-0 left-0 w-full bg-gradient-to-b from-background text-foreground p-1 font-bold line-clamp-1">
                   {image.style}
                 </p>
-                <Image
+                <img
                   src={image.url}
                   alt="user created images"
-                  width={500}
-                  height={500}
                   className="w-full h-full object-cover rounded-lg"
                   loading="lazy"
                 />
