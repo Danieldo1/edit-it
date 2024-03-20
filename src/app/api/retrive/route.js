@@ -9,12 +9,6 @@ export const dynamic = 'force-dynamic'
 export async function GET() {
    await mongoose.connect(process.env.MONGODB_URI)
     const data = await File.find().sort({createdAt: -1})
-    // const headers = {
-    //     'Cache-Control': 'no-cache, no-store, must-revalidate',
-    //     Pragma: 'no-cache',
-    //     Expires: '0',
-
-    //   };
       console.log(data, 'data')
     return NextResponse.json(data)
 }
